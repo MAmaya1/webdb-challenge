@@ -3,7 +3,8 @@ const db = require('../data/dbConfig');
 module.exports = {
     getProjects,
     getProjectById,
-    addProject
+    addProject,
+    getProjectActions
 }
 
 function getProjects() {
@@ -15,6 +16,13 @@ function getProjectById(id) {
         .where({ id })
         .first();
 }
+
+function getProjectActions(projectId) {
+    return db('actions as a')
+      .join('projects as p', 'p.id', 'a.project_id')
+      .select('a.id', 'a.description', 'a.notes', 'a.completed')
+      .where('a.project_id', projectId);
+  }
 
 function addProject(project) {
     return db('projects')
