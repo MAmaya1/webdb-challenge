@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
             res.status(201).json(projects)
         })
         .catch(err => {
-            res.status(500).json({ errorMessage: 'Could not retrieve projects data.' })
+            res.status(500).json({ error: err, message: 'Could not retrieve projects data.' })
         })
 })
 
