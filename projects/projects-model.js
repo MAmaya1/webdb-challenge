@@ -4,7 +4,8 @@ module.exports = {
     getProjects,
     getProjectById,
     addProject,
-    getProjectActions
+    getProjectActions,
+    updateProject
 }
 
 function getProjects() {
@@ -30,4 +31,10 @@ function addProject(project) {
         .then(([id]) => {
             return getProjectById(id)
         })
+}
+
+function updateProject(id, changes) {
+    return db('projects')
+        .where({ id })
+        .update(changes)
 }
