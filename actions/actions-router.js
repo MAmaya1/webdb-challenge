@@ -2,6 +2,8 @@ const router = require('express').Router();
 
 const Actions = require('../actions/actions-model');
 
+// GET action by ID
+
 router.get('/:id', (req, res) => {
     Actions.getActionById(req.params.id)
         .then(action => {
@@ -16,6 +18,8 @@ router.get('/:id', (req, res) => {
         })
 })
 
+// POST (add new action)
+
 router.post('/', (req, res) => {
     if (!req.body.name || !req.body.description || !req.body.project_id) {
         res.status(400).json({ errorMessage: 'A new action requires a name, description, and project id.' })
@@ -26,6 +30,26 @@ router.post('/', (req, res) => {
             })
             .catch(err => {
                 res.status(500).json({ error: err, message: 'Action could not be added to the database.' })
+            })
+    }
+})
+
+// PUT (update action)
+
+router.put('/:id', (req, res) => {
+    if (!req.body.name || !req.body.description || !req.body.project_id) {
+        res.status(400).json({ errorMessage: 'An action requires a name, description, and project id.' })
+    } else {
+        Actions.updateAction(req.params.id, req.body)
+            .then(count => {
+                if (count > 0) {
+                    res.status(201).json({ message: `${count} ${count > 1 ? 'records' : 'record'} updated.` })
+                } else {
+                    res.status(404).json({ errorMessage: 'An action with the specified ID does not exist.' })
+                }
+            })
+            .catch(err => {
+                res.status(500).json({ error: err, message: 'Action could not be updated.' })
             })
     }
 })
