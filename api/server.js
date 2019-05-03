@@ -8,6 +8,7 @@ const server = express();
 // Import Routers
 
 const projectsRouter = require('../projects/projects-router');
+const actionsRouter = require('../actions/actions-router');
 
 // Middleware
 
@@ -21,5 +22,6 @@ server.get('/', (req, res) => {
 })
 
 server.use('/api/projects', projectsRouter);
+server.use('/api/actions', actionsRouter);
 
 module.exports = server;
