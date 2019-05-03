@@ -10,6 +10,7 @@ exports.up = function(knex, Promise) {
             .notNullable()
         tbl 
             .boolean('completed')
+        tbl.timestamps(true, true);
     })
 };
 

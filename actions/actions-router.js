@@ -17,8 +17,8 @@ router.get('/:id', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    if (!req.body.name || !req.body.description) {
-        res.status(400).json({ errorMessage: 'A new action requires a name and a description.' })
+    if (!req.body.name || !req.body.description || !req.body.project_id) {
+        res.status(400).json({ errorMessage: 'A new action requires a name, description, and project id.' })
     } else {
         Actions.addAction(req.body)
             .then(action => {
