@@ -1,9 +1,15 @@
 const db = require('../data/dbConfig');
 
 module.exports = {
+    getActions,
     getActionById,
     addAction,
-    updateAction
+    updateAction,
+    deleteAction
+}
+
+function getActions() {
+    return db('actions')
 }
 
 function getActionById(id) {
@@ -14,7 +20,7 @@ function getActionById(id) {
 
 function addAction(action) {
     return db('actions')
-        .insert(action, 'id')
+        .insert(action, 'id') 
         .then(([id]) => {
             return getActionById(id)
         })
@@ -24,4 +30,10 @@ function updateAction(id, changes) {
     return db('actions')
         .where({ id })
         .update(changes)
+}
+
+function deleteAction(id) {
+    return db('actions')
+        .where('id', id)
+        .del()
 }
